@@ -1,11 +1,21 @@
 import { ChevronRight } from "lucide-react";
 
-export const Button = () => {
+export const Button = ({
+  chevron,
+  back,
+  width,
+  color,
+  text,
+  reverse,
+  border,
+}) => {
   return (
     <div>
-      <button className="flex justify-center text-4 text-[#fff] rounded-md py-[10px] px-3 w-[100%] bg-[#121316] ">
-        Continue 1/3
-        <ChevronRight className="w-6 h-6 " />
+      <button
+        className={`flex justify-center ${reverse}  text-4 ${color} rounded-md py-[10px] px-3 ${width} bg-${back} ${border}`}
+      >
+        {text}
+        {chevron}
       </button>
     </div>
   );

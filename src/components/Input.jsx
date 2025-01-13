@@ -1,4 +1,4 @@
-export const Input = ({ label, placeholder, oninvalid }) => {
+export const Input = ({ label, placeholder, type, height, oninvalid }) => {
   return (
     <>
       <div className="flex flex-col mt-3">
@@ -9,12 +9,11 @@ export const Input = ({ label, placeholder, oninvalid }) => {
           {label} <span className="text-[#E14942]">*</span>
         </label>
         <input
-          type="text"
+          type={type}
           placeholder={placeholder}
-          className=" placeholder:text-[16px] w-[416px] mt-2 p-3 rounded-lg border-[2px] border-[#CBD5E1] focus:outline-none focus:border-[#0CA5E9] "
-          onInvalid={oninvalid}
+          className={` placeholder:text-[16px] w-[416px] mt-2 p-3 rounded-lg border-[2px] border-[#CBD5E1] focus:outline-none focus:border-[#0CA5E9] ${height} `}
+          // onInvalid={oninvalid}
         />
-        {/* <h5>{oninvalid}</h5> */}
       </div>
     </>
   );
