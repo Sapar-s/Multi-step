@@ -8,7 +8,11 @@ export const FirstPage = () => {
       <div className="w-[480px] h-[655px] bg-[#fff] rounded-lg p-8 flex flex-col justify-between ">
         <div>
           <JoinUs />
-          <Input label="First name" placeholder="Your first name" />
+          <Input
+            label="First name"
+            placeholder="Your first name"
+            oninvalid="First name cannot contain special characters or numbers."
+          />
           <Input label="Last name" placeholder="Your last name" />
           <Input label="Username" placeholder="Your username" />
         </div>
