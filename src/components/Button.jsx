@@ -8,11 +8,13 @@ export const Button = ({
   text,
   reverse,
   border,
+  handleClick,
 }) => {
   return (
     <div>
       <button
-        className={`flex justify-center ${reverse}  text-4 ${color} rounded-md py-[10px] px-3 ${width} bg-${back} ${border}`}
+        onClick={handleClick}
+        className={`flex justify-center ${reverse}  text-4 ${color} rounded-md py-[10px] px-3 ${width} ${back} ${border}`}
       >
         {text}
         {chevron}

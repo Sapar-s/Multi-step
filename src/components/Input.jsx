@@ -1,4 +1,11 @@
-export const Input = ({ label, placeholder, type, height, oninvalid }) => {
+export const Input = ({
+  label,
+  placeholder,
+  type,
+  handleChange,
+  error,
+  name,
+}) => {
   return (
     <>
       <div className="flex flex-col mt-3">
@@ -11,9 +18,11 @@ export const Input = ({ label, placeholder, type, height, oninvalid }) => {
         <input
           type={type}
           placeholder={placeholder}
-          className={` placeholder:text-[16px] w-[416px] mt-2 p-3 rounded-lg border-[2px] border-[#CBD5E1] focus:outline-none focus:border-[#0CA5E9] ${height} `}
-          // onInvalid={oninvalid}
+          className={` placeholder:text-[16px] w-[416px] mt-2 p-3 rounded-lg border-[2px] border-[#CBD5E1] focus:outline-none focus:border-[#0CA5E9]`}
+          name={name}
+          onChange={handleChange}
         />
+        <small className="text-[#E14942] text-[14px]">{error}</small>
       </div>
     </>
   );

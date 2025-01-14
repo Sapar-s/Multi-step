@@ -1,27 +1,115 @@
+"use client";
+
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { JoinUs } from "./JoinUs";
+import { useState } from "react";
 
-export const SecondPage = () => {
+export const SecondPage = ({ click, setCurrentStep }) => {
+  const [formValues, setFormValues] = useState({
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [formErrors, setFormErrors] = useState({
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormErrors((prev) => ({ ...prev, [name]: "" }));
+
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleClick = () => {
+    let errorHave = false;
+    const { email, phoneNumber, password, confirmPassword } = formValues;
+
+    if (!email.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        email: "Please enter your email",
+      }));
+      errorHave = true;
+    }
+
+    if (!phoneNumber.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        phoneNumber: "Please enter your phone number",
+      }));
+      errorHave = true;
+    }
+
+    if (!password.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        password: "Please enter your password",
+      }));
+      errorHave = true;
+    }
+
+    if (!confirmPassword.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Please enter your Confirm password",
+      }));
+      errorHave = true;
+    }
+
+    if (!errorHave) {
+      setCurrentStep(click + 1);
+    }
+  };
+
+  const backClick = () => {
+    setCurrentStep(click - 1);
+  };
+
   return (
-    <div className="w-[480px] h-[655px] bg-[#fff] rounded-lg p-8 flex flex-col justify-between ">
+    <div className="w-[480px]  bg-[#fff] rounded-lg p-8 flex flex-col justify-between ">
       <div>
         <JoinUs />
-        <Input label="Email" placeholder="Your email" type="email" />
+        <Input
+          label="Email"
+          placeholder="Your email"
+          type="email"
+          error={formErrors.email}
+          handleChange={handleChange}
+          name="email"
+        />
         <Input
           label="Phone number"
           placeholder="Your phone number"
           type="number"
+          error={formErrors.phoneNumber}
+          handleChange={handleChange}
+          name="phoneNumber"
         />
-        <Input label="Password" placeholder="Your password" type="password" />
+        <Input
+          label="Password"
+          placeholder="Your password"
+          type="password"
+          error={formErrors.password}
+          handleChange={handleChange}
+          name="password"
+        />
         <Input
           label="Confirm password"
           placeholder="Confirm password"
           type="password"
+          error={formErrors.confirmPassword}
+          handleChange={handleChange}
+          name="confirmPassword"
         />
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-8">
         <Button
           chevron={<ChevronLeft />}
           back="[#fff]"
@@ -30,13 +118,15 @@ export const SecondPage = () => {
           text="Back"
           reverse="flex-row-reverse"
           border="border-[1px] border-[#CBD5E1]"
+          handleClick={backClick}
         />
         <Button
           chevron={<ChevronRight />}
-          back="[#121316]"
+          back="bg-[#121316]"
           width="w-[280px]"
           color="text-[#ffffff]"
           text="Continue 2/3"
+          handleClick={handleClick}
         />
       </div>
     </div>
