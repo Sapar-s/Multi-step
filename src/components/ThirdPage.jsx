@@ -5,6 +5,7 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { JoinUs } from "./JoinUs";
 import { useState } from "react";
+import ImageUpload from "./ImageUpload";
 
 export const ThirdPage = ({ click, setCurrentStep }) => {
   const [formValues, setFormValues] = useState({
@@ -15,8 +16,10 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
     birthDate: "",
     profileImage: "",
   });
+  const [profileURL, setProfileURL] = useState();
 
   const handleChange = (event) => {
+    console.log(event);
     const { name, value } = event.target;
     setFormErrors((prev) => ({ ...prev, [name]: "" }));
 
@@ -26,11 +29,19 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
   const handleClick = () => {
     let errorHave = false;
     const { birthDate, profileImage } = formValues;
+    const birth = parseInt(birthDate);
+    const age = new Date().getFullYear() - birth;
 
     if (!birthDate.trim()) {
       setFormErrors((prev) => ({
         ...prev,
-        birthDate: "Please enter your birth date",
+        birthDate: "Please select a date.",
+      }));
+      errorHave = true;
+    } else if (age <= 18) {
+      setFormErrors((prev) => ({
+        ...prev,
+        birthDate: "Must be over 18 years old.",
       }));
       errorHave = true;
     }
@@ -72,6 +83,8 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
           handleChange={handleChange}
           name="profileImage"
         /> */}
+
+        <ImageUpload />
       </div>
       <div className="flex justify-between">
         <Button

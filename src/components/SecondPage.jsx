@@ -31,10 +31,19 @@ export const SecondPage = ({ click, setCurrentStep }) => {
     let errorHave = false;
     const { email, phoneNumber, password, confirmPassword } = formValues;
 
+    let patternEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let patternNumber = /^\+?\d{8}$/;
+
     if (!email.trim()) {
       setFormErrors((prev) => ({
         ...prev,
         email: "Please enter your email",
+      }));
+      errorHave = true;
+    } else if (!patternEmail.test(email)) {
+      setFormErrors((prev) => ({
+        ...prev,
+        email: "Please provide a valid email address.",
       }));
       errorHave = true;
     }
@@ -45,6 +54,12 @@ export const SecondPage = ({ click, setCurrentStep }) => {
         phoneNumber: "Please enter your phone number",
       }));
       errorHave = true;
+    } else if (!patternNumber.test(phoneNumber)) {
+      setFormErrors((prev) => ({
+        ...prev,
+        phoneNumber: "Please enter a valid phone number.",
+      }));
+      errorHave = true;
     }
 
     if (!password.trim()) {
@@ -53,12 +68,24 @@ export const SecondPage = ({ click, setCurrentStep }) => {
         password: "Please enter your password",
       }));
       errorHave = true;
+    } else if (password.length <= 5) {
+      setFormErrors((prev) => ({
+        ...prev,
+        password: "Enter more than 6 passwords.",
+      }));
+      errorHave = true;
     }
 
     if (!confirmPassword.trim()) {
       setFormErrors((prev) => ({
         ...prev,
         confirmPassword: "Please enter your Confirm password",
+      }));
+      errorHave = true;
+    } else if (password !== confirmPassword) {
+      setFormErrors((prev) => ({
+        ...prev,
+        confirmPassword: "Passwords do not match. Please try again.",
       }));
       errorHave = true;
     }
@@ -87,7 +114,7 @@ export const SecondPage = ({ click, setCurrentStep }) => {
         <Input
           label="Phone number"
           placeholder="Your phone number"
-          type="number"
+          type="text"
           error={formErrors.phoneNumber}
           handleChange={handleChange}
           name="phoneNumber"
