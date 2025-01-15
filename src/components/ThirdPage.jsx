@@ -16,7 +16,7 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
     birthDate: "",
     profileImage: "",
   });
-  const [profileURL, setProfileURL] = useState();
+  // const [profileURL, setProfileURL] = useState();
 
   const handleChange = (event) => {
     console.log(event);
@@ -26,11 +26,33 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleImageUpload = (image) => {
+    setFormErrors((prev) => ({ ...prev, profileImage: "" }));
+    setFormValues((prev) => ({ ...prev, profileImage: image }));
+  };
+
   const handleClick = () => {
     let errorHave = false;
     const { birthDate, profileImage } = formValues;
-    const birth = parseInt(birthDate);
+    const dates = birthDate.split("-");
+
+    const birth = Number(dates[0]);
+    const birthMonth = Number(dates[1]);
+    const day = Number(dates[2]);
+
+    // const year = new Date().getFullYear();
     const age = new Date().getFullYear() - birth;
+    const month = new Date().getMonth() + 1;
+    const date = new Date().getDate();
+    // console.log(sar);
+    // console.log(n);
+    // console.log(birth);
+    // console.log("asd", month);
+    // console.log(day);
+    // console.log("aaaaa", year);
+    // const age = year - birth && birthMonth - month && date - day;
+
+    // console.log(age);
 
     if (!birthDate.trim()) {
       setFormErrors((prev) => ({
@@ -38,21 +60,25 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
         birthDate: "Please select a date.",
       }));
       errorHave = true;
-    } else if (age <= 18) {
+    } else if (age <= 18 && month >= birthMonth && date >= day) {
+      // if (month >= birthMonth) {
+      // if (date >= day) {
       setFormErrors((prev) => ({
         ...prev,
         birthDate: "Must be over 18 years old.",
       }));
       errorHave = true;
+      // }
+      // }
     }
 
-    // if (!profileImage.trim()) {
-    //   setFormErrors((prev) => ({
-    //     ...prev,
-    //     profileImage: "Please enter your last name",
-    //   }));
-    //   errorHave = true;
-    // }
+    if (!profileImage) {
+      setFormErrors((prev) => ({
+        ...prev,
+        profileImage: "Image cannot be blank",
+      }));
+      errorHave = true;
+    }
 
     if (!errorHave) {
       setCurrentStep(click + 1);
@@ -76,15 +102,10 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
             name="birthDate"
           />
         </div>
-        {/* <Input
-          type="image"
-          label="Profile image"
+        <ImageUpload
+          onImageUpload={handleImageUpload}
           error={formErrors.profileImage}
-          handleChange={handleChange}
-          name="profileImage"
-        /> */}
-
-        <ImageUpload />
+        />
       </div>
       <div className="flex justify-between">
         <Button
