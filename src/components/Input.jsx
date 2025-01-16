@@ -5,6 +5,7 @@ export const Input = ({
   handleChange,
   error,
   name,
+  value,
 }) => {
   return (
     <>
@@ -16,6 +17,7 @@ export const Input = ({
           {label} <span className="text-[#E14942]">*</span>
         </label>
         <input
+          value={value}
           type={type}
           placeholder={placeholder}
           className={` placeholder:text-[16px] w-[416px] mt-2 p-3 rounded-lg border-[2px]  focus:outline-none focus:border-[#0CA5E9] ${

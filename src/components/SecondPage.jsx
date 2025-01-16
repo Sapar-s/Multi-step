@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { JoinUs } from "./JoinUs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const SecondPage = ({ click, setCurrentStep }) => {
   const [formValues, setFormValues] = useState({
@@ -26,6 +26,21 @@ export const SecondPage = ({ click, setCurrentStep }) => {
 
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    const mail = JSON.parse(localStorage.getItem("email"));
+    const phone = JSON.parse(localStorage.getItem("phone"));
+    const pass = JSON.parse(localStorage.getItem("password"));
+    const conPass = JSON.parse(localStorage.getItem("confirmPass"));
+
+    setFormValues({
+      ...formValues,
+      email: mail,
+      phoneNumber: phone,
+      password: pass,
+      confirmPassword: conPass,
+    });
+  }, []);
 
   const handleClick = () => {
     let errorHave = false;
@@ -90,6 +105,16 @@ export const SecondPage = ({ click, setCurrentStep }) => {
       errorHave = true;
     }
 
+    localStorage.setItem("email", JSON.stringify(formValues.email));
+    localStorage.setItem("phone", JSON.stringify(formValues.phoneNumber));
+    localStorage.setItem("password", JSON.stringify(formValues.password));
+    localStorage.setItem(
+      "confirmPass",
+      JSON.stringify(formValues.confirmPassword)
+    );
+
+    localStorage.setItem("secondPage", JSON.stringify(formValues));
+
     if (!errorHave) {
       setCurrentStep(click + 1);
     }
@@ -107,6 +132,7 @@ export const SecondPage = ({ click, setCurrentStep }) => {
           label="Email"
           placeholder="Your email"
           type="email"
+          value={formValues.email}
           error={formErrors.email}
           handleChange={handleChange}
           name="email"
@@ -115,6 +141,7 @@ export const SecondPage = ({ click, setCurrentStep }) => {
           label="Phone number"
           placeholder="Your phone number"
           type="text"
+          value={formValues.phoneNumber}
           error={formErrors.phoneNumber}
           handleChange={handleChange}
           name="phoneNumber"
@@ -123,6 +150,7 @@ export const SecondPage = ({ click, setCurrentStep }) => {
           label="Password"
           placeholder="Your password"
           type="password"
+          value={formValues.password}
           error={formErrors.password}
           handleChange={handleChange}
           name="password"
@@ -131,6 +159,7 @@ export const SecondPage = ({ click, setCurrentStep }) => {
           label="Confirm password"
           placeholder="Confirm password"
           type="password"
+          value={formValues.confirmPassword}
           error={formErrors.confirmPassword}
           handleChange={handleChange}
           name="confirmPassword"

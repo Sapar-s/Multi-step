@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { JoinUs } from "./JoinUs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const FirstPage = ({ click, setCurrentStep }) => {
   const [formValues, setFormValues] = useState({
@@ -24,6 +24,20 @@ export const FirstPage = ({ click, setCurrentStep }) => {
 
     setFormValues((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    const firstName = localStorage.getItem("firstName");
+    const lastName = localStorage.getItem("lastName");
+    const userName = localStorage.getItem("userName");
+    // const firstPage = JSON.parse(localStorage.getItem("firstPage"));
+
+    setFormValues({
+      ...formValues,
+      firstName: firstName,
+      lastName: lastName,
+      userName: userName,
+    });
+  }, []);
 
   const handleClick = () => {
     let errorHave = false;
@@ -53,6 +67,12 @@ export const FirstPage = ({ click, setCurrentStep }) => {
       errorHave = true;
     }
 
+    // localStorage.setItem("firstName", JSON.stringify(formValues.firstName));
+    // localStorage.setItem("lastName", JSON.stringify(formValues.lastName));
+    // localStorage.setItem("userName", JSON.stringify(formValues.userName));
+
+    localStorage.setItem("firstPage", JSON.stringify(formValues));
+
     if (!errorHave) {
       setCurrentStep(click + 1);
     }
@@ -66,6 +86,7 @@ export const FirstPage = ({ click, setCurrentStep }) => {
             label="First name"
             placeholder="Your first name"
             type="text"
+            value={formValues.firstName}
             error={formErrors.firstName}
             handleChange={handleChange}
             name="firstName"
@@ -74,6 +95,7 @@ export const FirstPage = ({ click, setCurrentStep }) => {
             label="Last name"
             placeholder="Your last name"
             type="text"
+            value={formValues.lastName}
             error={formErrors.lastName}
             handleChange={handleChange}
             name="lastName"
@@ -82,6 +104,7 @@ export const FirstPage = ({ click, setCurrentStep }) => {
             label="Username"
             placeholder="Your username"
             type="text"
+            value={formValues.userName}
             error={formErrors.userName}
             handleChange={handleChange}
             name="userName"

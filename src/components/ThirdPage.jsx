@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import { JoinUs } from "./JoinUs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ImageUpload from "./ImageUpload";
 
 export const ThirdPage = ({ click, setCurrentStep }) => {
@@ -30,6 +30,12 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
     setFormErrors((prev) => ({ ...prev, profileImage: "" }));
     setFormValues((prev) => ({ ...prev, profileImage: image }));
   };
+
+  useEffect(() => {
+    const birth = JSON.parse(localStorage.getItem("dateOfBirth"));
+
+    setFormValues({ ...formValues, birthDate: birth });
+  }, []);
 
   const handleClick = () => {
     let errorHave = false;
@@ -74,6 +80,10 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
       errorHave = true;
     }
 
+    localStorage.setItem("dateOfBirth", JSON.stringify(formValues.birthDate));
+
+    localStorage.setItem("thirdPage", JSON.stringify(formValues));
+
     if (!errorHave) {
       setCurrentStep(click + 1);
     }
@@ -91,6 +101,7 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
           <Input
             type="date"
             label="Date of birth"
+            value={formValues.birthDate}
             error={formErrors.birthDate}
             handleChange={handleChange}
             name="birthDate"
