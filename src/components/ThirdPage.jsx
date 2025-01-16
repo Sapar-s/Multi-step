@@ -34,25 +34,6 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
   const handleClick = () => {
     let errorHave = false;
     const { birthDate, profileImage } = formValues;
-    const dates = birthDate.split("-");
-
-    const birth = Number(dates[0]);
-    const birthMonth = Number(dates[1]);
-    const day = Number(dates[2]);
-
-    // const year = new Date().getFullYear();
-    const age = new Date().getFullYear() - birth;
-    const month = new Date().getMonth() + 1;
-    const date = new Date().getDate();
-    // console.log(sar);
-    // console.log(n);
-    // console.log(birth);
-    // console.log("asd", month);
-    // console.log(day);
-    // console.log("aaaaa", year);
-    // const age = year - birth && birthMonth - month && date - day;
-
-    // console.log(age);
 
     if (!birthDate.trim()) {
       setFormErrors((prev) => ({
@@ -60,17 +41,30 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
         birthDate: "Please select a date.",
       }));
       errorHave = true;
-    } else if (age <= 18 && month >= birthMonth && date >= day) {
-      // if (month >= birthMonth) {
-      // if (date >= day) {
-      setFormErrors((prev) => ({
-        ...prev,
-        birthDate: "Must be over 18 years old.",
-      }));
-      errorHave = true;
-      // }
-      // }
+    } else {
+      const dates = birthDate.split("-");
+
+      const birth = Number(dates[0]);
+      const birthMonth = Number(dates[1]);
+      const day = Number(dates[2]);
+
+      const age = new Date().getFullYear() - birth;
+      const month = new Date().getMonth() + 1 - birthMonth;
+      const date = new Date().getDate() - day;
+
+      if (
+        age < 18 ||
+        (age === 18 && (month < 0 || (month === 0 && date < 0)))
+      ) {
+        setFormErrors((prev) => ({
+          ...prev,
+          birthDate: "Must be over 18 years old.",
+        }));
+        errorHave = true;
+      }
     }
+    // }
+    // }
 
     if (!profileImage) {
       setFormErrors((prev) => ({
