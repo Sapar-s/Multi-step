@@ -28,22 +28,9 @@ export const SecondPage = ({ click, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    // const mail = JSON.parse(localStorage.getItem("email"));
-    // const phone = JSON.parse(localStorage.getItem("phone"));
-    // const pass = JSON.parse(localStorage.getItem("password"));
-    // const conPass = JSON.parse(localStorage.getItem("confirmPass"));
-
     const savedValue = JSON.parse(localStorage.getItem("secondPage"));
 
     setFormValues((prev) => ({ ...prev, ...savedValue }));
-
-    // setFormValues({
-    //   ...formValues,
-    //   email: mail,
-    //   phoneNumber: phone,
-    //   password: pass,
-    //   confirmPassword: conPass,
-    // });
   }, []);
 
   const handleClick = () => {
@@ -108,14 +95,6 @@ export const SecondPage = ({ click, setCurrentStep }) => {
       }));
       errorHave = true;
     }
-
-    // localStorage.setItem("email", JSON.stringify(formValues.email));
-    // localStorage.setItem("phone", JSON.stringify(formValues.phoneNumber));
-    // localStorage.setItem("password", JSON.stringify(formValues.password));
-    // localStorage.setItem(
-    //   "confirmPass",
-    //   JSON.stringify(formValues.confirmPassword)
-    // );
 
     if (!errorHave) {
       localStorage.setItem("secondPage", JSON.stringify(formValues));

@@ -1,5 +1,3 @@
-import { ChevronRight } from "lucide-react";
-
 export const Button = ({
   chevron,
   back,

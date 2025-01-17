@@ -26,30 +26,27 @@ export const FirstPage = ({ click, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    // const firstName = localStorage.getItem("firstName");
-    // const lastName = localStorage.getItem("lastName");
-    // const userName = localStorage.getItem("userName");
-
     const savedValue = JSON.parse(localStorage.getItem("firstPage"));
 
     setFormValues((prev) => ({ ...prev, ...savedValue }));
-
-    // setFormValues({
-    //   ...formValues,
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   userName: userName,
-    // });
   }, []);
 
   const handleClick = () => {
     let errorHave = false;
     const { firstName, lastName, userName } = formValues;
 
+    let patternNumber = /\d/;
+
     if (!firstName.trim()) {
       setFormErrors((prev) => ({
         ...prev,
         firstName: "Please enter your first name",
+      }));
+      errorHave = true;
+    } else if (!patternNumber.test(firstName)) {
+      setFormErrors((prev) => ({
+        ...prev,
+        firstName: "First name cannot contain special characters or numbers.",
       }));
       errorHave = true;
     }
@@ -69,10 +66,6 @@ export const FirstPage = ({ click, setCurrentStep }) => {
       }));
       errorHave = true;
     }
-
-    // localStorage.setItem("firstName", JSON.stringify(formValues.firstName));
-    // localStorage.setItem("lastName", JSON.stringify(formValues.lastName));
-    // localStorage.setItem("userName", JSON.stringify(formValues.userName));
 
     if (!errorHave) {
       localStorage.setItem("firstPage", JSON.stringify(formValues));

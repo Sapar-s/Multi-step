@@ -16,7 +16,6 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
     birthDate: "",
     profileImage: "",
   });
-  // const [profileURL, setProfileURL] = useState();
 
   const handleChange = (event) => {
     console.log(event);
@@ -32,11 +31,9 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    // const birth = JSON.parse(localStorage.getItem("dateOfBirth"));
     const savedValue = JSON.parse(localStorage.getItem("thirdPage"));
 
     setFormValues((prev) => ({ ...prev, ...savedValue }));
-    // setFormValues({ ...formValues, birthDate: birth });
   }, []);
 
   const handleClick = () => {
@@ -71,8 +68,6 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
         errorHave = true;
       }
     }
-    // }
-    // }
 
     if (!profileImage) {
       setFormErrors((prev) => ({
@@ -82,10 +77,9 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
       errorHave = true;
     }
 
-    // localStorage.setItem("dateOfBirth", JSON.stringify(formValues.birthDate));
-
     if (!errorHave) {
       localStorage.setItem("thirdPage", JSON.stringify(formValues));
+      localStorage.setItem("currentPage", 3);
       setCurrentStep(click + 1);
     }
   };
