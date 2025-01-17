@@ -35,7 +35,7 @@ export const FirstPage = ({ click, setCurrentStep }) => {
     let errorHave = false;
     const { firstName, lastName, userName } = formValues;
 
-    let patternNumber = /\d/;
+    let patternNumber = /^[a-zA-Z]+$/;
 
     if (!firstName.trim()) {
       setFormErrors((prev) => ({
@@ -55,6 +55,12 @@ export const FirstPage = ({ click, setCurrentStep }) => {
       setFormErrors((prev) => ({
         ...prev,
         lastName: "Please enter your last name",
+      }));
+      errorHave = true;
+    } else if (!patternNumber.test(firstName)) {
+      setFormErrors((prev) => ({
+        ...prev,
+        lastName: "First name cannot contain special characters or numbers.",
       }));
       errorHave = true;
     }
