@@ -32,9 +32,11 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    const birth = JSON.parse(localStorage.getItem("dateOfBirth"));
+    // const birth = JSON.parse(localStorage.getItem("dateOfBirth"));
+    const savedValue = JSON.parse(localStorage.getItem("thirdPage"));
 
-    setFormValues({ ...formValues, birthDate: birth });
+    setFormValues((prev) => ({ ...prev, ...savedValue }));
+    // setFormValues({ ...formValues, birthDate: birth });
   }, []);
 
   const handleClick = () => {
@@ -80,11 +82,10 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
       errorHave = true;
     }
 
-    localStorage.setItem("dateOfBirth", JSON.stringify(formValues.birthDate));
-
-    localStorage.setItem("thirdPage", JSON.stringify(formValues));
+    // localStorage.setItem("dateOfBirth", JSON.stringify(formValues.birthDate));
 
     if (!errorHave) {
+      localStorage.setItem("thirdPage", JSON.stringify(formValues));
       setCurrentStep(click + 1);
     }
   };

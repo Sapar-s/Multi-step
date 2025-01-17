@@ -12,10 +12,9 @@ export default function Home() {
   const FormSteps = [FirstPage, SecondPage, ThirdPage, FourthPage][currentStep];
 
   useEffect(() => {
-    // const firstPage = JSON.parse(localStorage.getItem("firstPage"));
-    // const secondPage = JSON.parse(localStorage.getItem("secondPage"));
-    // const thirdPage = JSON.parse(localStorage.getItem("thirdPage"));
-    // setCurrentStep(currentStep + 1);
+    const savedPages = localStorage.getItem("currentPage");
+    console.log(typeof savedPages);
+    setCurrentStep(Number(savedPages));
   }, []);
 
   return (

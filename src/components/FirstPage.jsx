@@ -26,17 +26,20 @@ export const FirstPage = ({ click, setCurrentStep }) => {
   };
 
   useEffect(() => {
-    const firstName = localStorage.getItem("firstName");
-    const lastName = localStorage.getItem("lastName");
-    const userName = localStorage.getItem("userName");
-    // const firstPage = JSON.parse(localStorage.getItem("firstPage"));
+    // const firstName = localStorage.getItem("firstName");
+    // const lastName = localStorage.getItem("lastName");
+    // const userName = localStorage.getItem("userName");
 
-    setFormValues({
-      ...formValues,
-      firstName: firstName,
-      lastName: lastName,
-      userName: userName,
-    });
+    const savedValue = JSON.parse(localStorage.getItem("firstPage"));
+
+    setFormValues((prev) => ({ ...prev, ...savedValue }));
+
+    // setFormValues({
+    //   ...formValues,
+    //   firstName: firstName,
+    //   lastName: lastName,
+    //   userName: userName,
+    // });
   }, []);
 
   const handleClick = () => {
@@ -71,9 +74,9 @@ export const FirstPage = ({ click, setCurrentStep }) => {
     // localStorage.setItem("lastName", JSON.stringify(formValues.lastName));
     // localStorage.setItem("userName", JSON.stringify(formValues.userName));
 
-    localStorage.setItem("firstPage", JSON.stringify(formValues));
-
     if (!errorHave) {
+      localStorage.setItem("firstPage", JSON.stringify(formValues));
+      localStorage.setItem("currentPage", 1);
       setCurrentStep(click + 1);
     }
   };
