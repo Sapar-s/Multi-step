@@ -18,7 +18,6 @@ export const ThirdPage = ({ click, setCurrentStep }) => {
   });
 
   const handleChange = (event) => {
-    console.log(event);
     const { name, value } = event.target;
     setFormErrors((prev) => ({ ...prev, [name]: "" }));
 

@@ -15,7 +15,6 @@ export default function Home() {
 
   useEffect(() => {
     const savedPages = localStorage.getItem("currentPage");
-    console.log(typeof savedPages);
     setCurrentStep(Number(savedPages));
   }, []);
 
